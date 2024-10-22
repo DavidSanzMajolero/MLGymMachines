@@ -1,8 +1,10 @@
-﻿using MainWeb.Services;
-using FinalProject.Domain.Entities;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
+using MainWeb;
+using FinalProject.Domain.Entities;
+using MainWeb.Services;
 
 namespace MainWeb.Controllers
 {
@@ -17,36 +19,46 @@ namespace MainWeb.Controllers
             _gymMachineService = gymMachineService;
         }
 
-        // GET: api/GymMachines
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<GymMachine>>> GetGymMachines()
+        // POST: api/GymMachines/predict
+        [HttpPost("predict")]
+        public async Task<IActionResult> PredictMachine(IFormFile file)
         {
-            var machines = await _gymMachineService.GetGymMachines();
-            return Ok(machines);
-        }
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("No image uploaded.");
+            }
 
-        // GET: api/GymMachines/1
-        [HttpGet("{id}")]
-        public async Task<ActionResult<GymMachine>> GetGymMachine(int id)
-        {
-            var machine = await _gymMachineService.GetGymMachine(id);
+            // Leer la imagen como byte array
+            byte[] imageBytes;
+            using (var memoryStream = new MemoryStream())
+            {
+                await file.CopyToAsync(memoryStream);
+                imageBytes = memoryStream.ToArray();
+            }
+
+            // Crear el input para el modelo de ML
+            var input = new MLModelMachineGym.ModelInput
+            {
+                ImageSource = imageBytes
+            };
+
+            // Hacer la predicción con el modelo de ML
+            var result = MLModelMachineGym.Predict(input);
+            var predictedLabel = result.PredictedLabel;
+
+            // Buscar la máquina por el nombre predicho
+            var machine = await _gymMachineService.GetGymMachineByName(predictedLabel);
             if (machine == null)
             {
-                return NotFound();
+                return NotFound("Machine not found.");
             }
-            return Ok(machine);
-        }
 
-        // GET: api/GymMachines/name/{name}
-        [HttpGet("name/{name}")]
-        public async Task<ActionResult<GymMachine>> GetGymMachineByName(string name)
-        {
-            var machine = await _gymMachineService.GetGymMachineByName(name);
-            if (machine == null)
+            return Ok(new
             {
-                return NotFound();
-            }
-            return Ok(machine);
+                name = machine.Name,
+                description = machine.Description,
+                usingSteps = machine.UsingSteps
+            });
         }
     }
 }

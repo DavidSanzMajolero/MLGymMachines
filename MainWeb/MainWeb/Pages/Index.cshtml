@@ -31,12 +31,6 @@
                     <input type="file" class="form-control-file" id="machineImage" accept="image/*">
                 </div>
 
-                <!-- Input for Machine ID -->
-                <div class="form-group">
-                    <label for="machineId">Enter Machine ID</label>
-                    <input type="number" class="form-control" id="machineId" placeholder="Enter Machine ID" required>
-                </div>
-
                 <!-- Button to analyze -->
                 <div class="text-center mt-3">
                     <button type="button" class="btn btn-primary btn-lg mt-3" id="analyzeButton">Analyze Machine</button>
@@ -45,7 +39,7 @@
         </div>
     </div>
 
-    <!-- Show default image when no image is uploaded -->
+    <!-- Show uploaded image -->
     <div class="row mt-5">
         <div class="col-md-6 offset-md-3 text-center">
             <h4>Uploaded Image</h4>
@@ -85,27 +79,44 @@
 
 <script>
     document.getElementById("analyzeButton").addEventListener("click", function () {
-        // Obtener el ID de la máquina introducida por el usuario
-        var machineId = document.getElementById("machineId").value;
+        var fileInput = document.getElementById("machineImage");
+        var uploadedImage = document.getElementById("uploadedImage");
 
-        // Realizar una solicitud GET a la API usando el ID de la máquina
-        fetch(`/api/GymMachines/${encodeURIComponent(machineId)}`)
+        if (fileInput.files.length === 0) {
+            alert("Please upload an image first.");
+            return;
+        }
+
+        var formData = new FormData();
+        formData.append("file", fileInput.files[0]);
+
+        // Mostrar la imagen subida en la página
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            uploadedImage.src = e.target.result;
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+
+        // Hacer la solicitud al servidor para la predicción
+        fetch('/api/GymMachines/predict', {
+            method: 'POST',
+            body: formData
+        })
             .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('No se encontró la máquina.');
+                if (!response.ok) {
+                    throw new Error("Error in prediction: " + response.statusText);
                 }
+                return response.json();
             })
             .then(data => {
-                // Actualizar los campos en la tabla con los datos de la API
+                // Actualizar los campos con los datos de la predicción
                 document.getElementById("machineNameField").innerText = data.name;
                 document.getElementById("machineDescriptionField").innerText = data.description;
                 document.getElementById("machineStepsField").innerText = data.usingSteps.join(', ');
             })
             .catch(error => {
-                console.error('Error fetching machine data:', error);
-                alert("Machine not found!");
+                console.error('Error:', error);
+                alert("There was an error processing the image.");
             });
     });
 </script>
