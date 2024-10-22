@@ -1,0 +1,144 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Fitness Machine Analyzer";
+}
+
+<div class="container mt-5">
+    <!-- Page title -->
+    <div class="row">
+        <div class="col text-center">
+            <h1 class="display-4">Fitness Machine Analyzer</h1>
+            <p class="lead">Use Machine Learning to analyze gym machines through images.</p>
+        </div>
+    </div>
+
+    <!-- Description of how it works -->
+    <div class="row mt-4">
+        <div class="col-md-8 offset-md-2 text-center">
+            <p>
+                Upload a picture of any gym machine and our Machine Learning technology will automatically analyze the machine to provide useful information, such as the machine's name, the muscles it targets, and instructions on how to use it properly.
+            </p>
+        </div>
+    </div>
+
+    <!-- Form to upload the image -->
+    <div class="row mt-5">
+        <div class="col-md-6 offset-md-3">
+            <form enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="machineImage">Upload Machine Image</label>
+                    <input type="file" class="form-control-file" id="machineImage" accept="image/*">
+                </div>
+
+                <!-- Input for Machine ID -->
+                <div class="form-group">
+                    <label for="machineId">Enter Machine ID</label>
+                    <input type="number" class="form-control" id="machineId" placeholder="Enter Machine ID" required>
+                </div>
+
+                <!-- Button to analyze -->
+                <div class="text-center mt-3">
+                    <button type="button" class="btn btn-primary btn-lg mt-3" id="analyzeButton">Analyze Machine</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Show default image when no image is uploaded -->
+    <div class="row mt-5">
+        <div class="col-md-6 offset-md-3 text-center">
+            <h4>Uploaded Image</h4>
+            <img id="uploadedImage" src="https://via.placeholder.com/300?text=No+Image+Uploaded" alt="Gym machine image" class="img-fluid mt-3" style="max-height: 300px;">
+        </div>
+    </div>
+
+    <!-- Table with machine information -->
+    <div class="row mt-5">
+        <div class="col-md-8 offset-md-2">
+            <h4>Machine Information</h4>
+            <table class="table table-bordered table-striped mt-3">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Attribute</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Machine Name</td>
+                        <td id="machineNameField">To be determined</td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td id="machineDescriptionField">To be determined</td>
+                    </tr>
+                    <tr>
+                        <td>Steps</td>
+                        <td id="machineStepsField">To be determined</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("analyzeButton").addEventListener("click", function () {
+        // Obtener el ID de la máquina introducida por el usuario
+        var machineId = document.getElementById("machineId").value;
+
+        // Realizar una solicitud GET a la API usando el ID de la máquina
+        fetch(`/api/GymMachines/${encodeURIComponent(machineId)}`)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('No se encontró la máquina.');
+                }
+            })
+            .then(data => {
+                // Actualizar los campos en la tabla con los datos de la API
+                document.getElementById("machineNameField").innerText = data.name;
+                document.getElementById("machineDescriptionField").innerText = data.description;
+                document.getElementById("machineStepsField").innerText = data.usingSteps.join(', ');
+            })
+            .catch(error => {
+                console.error('Error fetching machine data:', error);
+                alert("Machine not found!");
+            });
+    });
+</script>
+
+<!-- Custom styling -->
+<style>
+    h1 {
+        font-weight: bold;
+        color: #007bff;
+    }
+
+    p.lead {
+        font-size: 1.25rem;
+    }
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+    table th {
+        background-color: #343a40;
+        color: white;
+    }
+
+    table td {
+        font-size: 1rem;
+    }
+
+    .form-control-file {
+        margin-top: 1rem;
+    }
+
+    button {
+        margin-top: 1rem;
+    }
+</style>
