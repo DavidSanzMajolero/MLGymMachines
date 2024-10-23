@@ -22,12 +22,12 @@
     <PackageReference Include="Microsoft.ML.Vision" Version="3.0.1" />
     <PackageReference Include="SciSharp.TensorFlow.Redist" Version="2.3.1" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FinalProject.Domain\FinalProject.Domain.csproj" />
+  </ItemGroup>
   <ItemGroup Label="MLModelMachineGym">
     <None Include="MLModelMachineGym.mlnet">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FinalProject.Domain\FinalProject.Domain.csproj" />
   </ItemGroup>
 </Project>
