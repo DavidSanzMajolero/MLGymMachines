@@ -69,7 +69,9 @@
                     </tr>
                     <tr>
                         <td>Steps</td>
-                        <td id="machineStepsField">To be determined</td>
+                        <td id="machineStepsField">
+                            <ol id="stepsList"></ol> <!-- Aquí se mostrarán los pasos -->
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -112,13 +114,29 @@
                 // Actualizar los campos con los datos de la predicción
                 document.getElementById("machineNameField").innerText = data.name;
                 document.getElementById("machineDescriptionField").innerText = data.description;
-                document.getElementById("machineStepsField").innerText = data.usingSteps.join(', ');
+
+                // Llamar a la función que muestra los pasos
+                displaySteps(data.usingSteps);
             })
             .catch(error => {
                 console.error('Error:', error);
                 alert("There was an error processing the image.");
             });
     });
+
+    // Función para mostrar los pasos en orden
+    function displaySteps(stepsArray) {
+        var stepsList = document.getElementById("stepsList");
+        stepsList.innerHTML = ''; // Limpiar lista antes de agregar los nuevos pasos
+
+        stepsArray.forEach((step, index) => {
+            var li = document.createElement("li");
+            li.textContent = step;
+            li.style.fontSize = "0.9rem";  // Tamaño de letra reducido
+            li.style.marginBottom = "0.5rem";  // Espacio entre los pasos
+            stepsList.appendChild(li);
+        });
+    }
 </script>
 
 <!-- Custom styling -->
@@ -152,4 +170,21 @@
     button {
         margin-top: 1rem;
     }
+
+    /* Estilo personalizado para la lista de pasos */
+    ol#stepsList {
+        padding-left: 1.5rem; /* Aumentar la indentación de la lista */
+        font-family: 'Arial', sans-serif;
+    }
+
+        ol#stepsList li {
+            margin-bottom: 10px; /* Espacio entre cada paso */
+            font-size: 0.9rem; /* Tamaño de fuente reducido */
+            color: #333; /* Color del texto de los pasos */
+        }
+
+            ol#stepsList li::marker {
+                font-weight: bold;
+                color: #007bff; /* Cambiar color del número del paso */
+            }
 </style>
