@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
-namespace MLModelMachineGym_3
+namespace MainWeb
 {
     public partial class MLModelMachineGym
     {

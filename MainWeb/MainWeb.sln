@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MainWeb", "MainWeb\MainWeb.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalProject.Domain", "FinalProject.Domain\FinalProject.Domain.csproj", "{4985D836-C239-4602-A2E9-9B58DF9E2AB8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MLModelMachineGym_4", "MLModelMachineGym_4\MLModelMachineGym_4.csproj", "{FDE23BA1-0734-495D-9446-627D59437911}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{4985D836-C239-4602-A2E9-9B58DF9E2AB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4985D836-C239-4602-A2E9-9B58DF9E2AB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4985D836-C239-4602-A2E9-9B58DF9E2AB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDE23BA1-0734-495D-9446-627D59437911}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDE23BA1-0734-495D-9446-627D59437911}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDE23BA1-0734-495D-9446-627D59437911}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDE23BA1-0734-495D-9446-627D59437911}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
