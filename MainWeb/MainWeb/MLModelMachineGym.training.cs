@@ -9,7 +9,7 @@ using Microsoft.ML;
 using Microsoft.ML.Data;
 using Microsoft.ML.Vision;
 
-namespace MLModelMachineGym_3
+namespace MainWeb
 {
     public partial class MLModelMachineGym
     {
