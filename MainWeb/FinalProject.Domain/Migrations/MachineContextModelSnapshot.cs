@@ -73,6 +73,13 @@ namespace FinalProject.Domain.Migrations
                             Description = "The deadlift is a fundamental strength exercise that targets multiple muscle groups, primarily the lower back, glutes, hamstrings, and core. It involves lifting a weighted barbell from the ground to hip level by hinging at the hips and engaging the legs and back.",
                             Name = "deadlift",
                             UsingSteps = "[\"Stand with feet shoulder-width apart, barbell over the middle of your feet. Bend down, grip the bar slightly outside your knees.\",\"Keep your back straight, chest up, and shoulders over the bar. Hinge at the hips and slightly bend your knees.\",\"Push through your heels, extend your hips, and lift the barbell up, keeping it close to your body.\",\"Stand fully upright with the barbell at hip height, shoulders back, and core tight.\",\"Reverse the motion by hinging at the hips and bending your knees to lower the bar back to the ground.\",\"Complete the desired number of repetitions, maintaining proper form.\"]"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "The lat pulldown is a strength exercise that targets the muscles of the upper back, primarily the latissimus dorsi. It involves pulling a bar down towards your chest while seated, simulating a pull-up motion. This exercise helps improve upper body strength and posture.",
+                            Name = "pulldown",
+                            UsingSteps = "[\"Adjust the knee pad to secure your legs. Grip the bar slightly wider than shoulder-width.\",\"Sit upright with your arms fully extended, core tight, and shoulders slightly back.\",\"Pull the bar down towards your upper chest, leading with your elbows and keeping your back straight.\",\"Hold briefly when the bar reaches your chest, squeezing your shoulder blades together.\",\"Slowly extend your arms, letting the bar rise back to the starting position in a controlled motion.\",\"Complete the desired number of repetitions while maintaining good form.\"]"
                         });
                 });
 #pragma warning restore 612, 618

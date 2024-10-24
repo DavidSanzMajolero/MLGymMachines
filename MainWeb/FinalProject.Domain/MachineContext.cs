@@ -79,6 +79,21 @@ namespace FinalProject.Domain
                         "Reverse the motion by hinging at the hips and bending your knees to lower the bar back to the ground.",
                         "Complete the desired number of repetitions, maintaining proper form."
                     }
+                },
+                new GymMachine
+                {
+                    Id = 5,
+                    Name = "pulldown",
+                    Description = "The lat pulldown is a strength exercise that targets the muscles of the upper back, primarily the latissimus dorsi. It involves pulling a bar down towards your chest while seated, simulating a pull-up motion. This exercise helps improve upper body strength and posture.",
+                    UsingSteps = new string[]
+                    {
+                        "Adjust the knee pad to secure your legs. Grip the bar slightly wider than shoulder-width.",
+                        "Sit upright with your arms fully extended, core tight, and shoulders slightly back.",
+                        "Pull the bar down towards your upper chest, leading with your elbows and keeping your back straight.",
+                        "Hold briefly when the bar reaches your chest, squeezing your shoulder blades together.",
+                        "Slowly extend your arms, letting the bar rise back to the starting position in a controlled motion.",
+                        "Complete the desired number of repetitions while maintaining good form."
+                    }
                 }
             );
         }
